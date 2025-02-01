@@ -40,6 +40,7 @@ public struct HorizontalPage<Item: Identifiable, Page: View>: UIViewControllerRe
             navigationOrientation: .horizontal,
             options: options
         )
+        controller.view.backgroundColor = .clear
         controller.dataSource = context.coordinator
         controller.delegate = context.coordinator
         if
@@ -120,6 +121,7 @@ private class HostingControllerWrapper<Item, Content: View>: UIHostingController
     init(rootView: Content, item: Item) {
         self.item = item
         super.init(rootView: rootView)
+        self.view.backgroundColor = .clear
     }
 
     required init?(coder: NSCoder) {
