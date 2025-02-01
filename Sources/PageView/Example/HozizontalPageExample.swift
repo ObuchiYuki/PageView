@@ -18,7 +18,7 @@ fileprivate struct HorizontalPageExample: View {
         Item(id: 1, color: .green),
         Item(id: 2, color: .blue),
     ]
-    @State var selection: Item.ID = 0
+    @State var selection: Item.ID? = 0
 
     var body: some View {
         HorizontalPage(

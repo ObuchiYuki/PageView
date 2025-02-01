@@ -15,12 +15,12 @@ public struct HorizontalPage<Item: Identifiable, Page: View>: UIViewControllerRe
     
     public let spacing: CGFloat
     
-    @Binding public var selection: Item.ID
+    @Binding public var selection: Item.ID?
 
     public init(
         items: [Item],
         spacing: CGFloat,
-        selection: Binding<Item.ID>,
+        selection: Binding<Item.ID?>,
         page: @escaping (Item) -> Page
     ) {
         self.items = items
@@ -53,6 +53,15 @@ public struct HorizontalPage<Item: Identifiable, Page: View>: UIViewControllerRe
     }
 
     public func updateUIViewController(_ uiViewController: UIPageViewController, context: Context) {
+        // initial update
+        if uiViewController.viewControllers?.isEmpty ?? true,
+           let item = self.items.first(where: { $0.id == self.selection }),
+           let initialVC = context.coordinator.makeViewController(for: item)
+        {
+            uiViewController.setViewControllers([initialVC], direction: .forward, animated: false)
+        }
+        
+        // page update
         if
             let currentVC = uiViewController.viewControllers?.first as? HostingControllerWrapper<Item, Page>,
             currentVC.item.id != self.selection,
