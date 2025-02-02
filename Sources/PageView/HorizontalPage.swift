@@ -124,7 +124,7 @@ public struct HorizontalPage<Item: Identifiable, Page: View>: UIViewControllerRe
     }
 }
 
-private class HostingControllerWrapper<Item, Content: View>: UIHostingController<Content> {
+final private class HostingControllerWrapper<Item, Content: View>: UIHostingController<Content> {
     let item: Item
 
     init(rootView: Content, item: Item) {
